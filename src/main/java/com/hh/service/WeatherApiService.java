@@ -6,6 +6,7 @@ import com.hh.cache.CityWeatherCache;
 import com.hh.dto.WeatherResponse;
 
 import com.hh.exception.ExceptionFactory;
+import com.hh.exception.WeatherSdkException;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -45,10 +46,10 @@ public class WeatherApiService implements ApiService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Ошибка при выполнении запроса");
+            throw new WeatherSdkException("Ошибка при чтении");
         } catch (ParseException e) {
             e.printStackTrace();
-            throw new RuntimeException("Ошибка при распарсинге");
+            throw new WeatherSdkException("Ошибка при распарсинге");
         }
     }
 

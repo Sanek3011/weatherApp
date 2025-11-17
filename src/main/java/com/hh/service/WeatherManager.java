@@ -4,6 +4,7 @@ package com.hh.service;
 import com.hh.cache.CityWeatherCache;
 import com.hh.dto.WeatherData;
 import com.hh.dto.WeatherResponse;
+import com.hh.exception.WeatherSdkException;
 
 import java.net.URISyntaxException;
 
@@ -27,7 +28,7 @@ public class WeatherManager {
                 weatherResponse = weatherApiService.parseWeather(city);
                 cache.addCity(weatherResponse);
             } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
+                throw new WeatherSdkException("Ошибка при парсинге url");
             }
         }
         return new WeatherData(weatherResponse);
@@ -37,7 +38,7 @@ public class WeatherManager {
         try {
             return weatherApiService.parseWeather(city);
         }catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new WeatherSdkException("Ошибка при парсинге url");
         }
     }
 }
