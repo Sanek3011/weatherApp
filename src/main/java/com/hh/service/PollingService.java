@@ -16,12 +16,12 @@ public class PollingService {
         this.manager = manager;
     }
 
-    public void startPolling() {
+    public void startPolling(long time, TimeUnit unit) {
         schedule.scheduleAtFixedRate(() -> {
             for (String cityName : cache.cachedCities()) {
                 cache.addCity(manager.getRawData(cityName));
             }
-        },0, 5, TimeUnit.MINUTES);
+        },0, time, unit);
     }
 
     public void stopPolling() {

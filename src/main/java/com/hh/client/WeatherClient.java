@@ -6,6 +6,8 @@ import com.hh.dto.WeatherResponse;
 import com.hh.service.PollingService;
 import com.hh.service.WeatherManager;
 
+import java.util.concurrent.TimeUnit;
+
 public class WeatherClient {
 
     private final WorkMode workMode;
@@ -17,14 +19,19 @@ public class WeatherClient {
         this.manager = new WeatherManager(apiKey);
         if (workMode.equals(WorkMode.POLLING)) {
             pollingService = new PollingService(this.manager);
-            startPolling();
+            startPolling(5, TimeUnit.MINUTES);
         }
     }
 
-    private void startPolling() {
+    private void startPolling(long time, TimeUnit unit) {
         if (pollingService != null) {
-            pollingService.startPolling();
+            pollingService.startPolling(time, unit);
         }
+    }
+
+    public void changeIntervalPolling(long time, TimeUnit unit) {
+        stopPolling();
+        startPolling(time, unit);
     }
 
     public WeatherData getWeather(String city) {
