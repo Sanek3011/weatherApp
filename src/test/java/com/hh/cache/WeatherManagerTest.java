@@ -1,9 +1,6 @@
 package com.hh.cache;
 
-import com.hh.dto.MainParameters;
-import com.hh.dto.WeatherData;
-import com.hh.dto.WeatherResponse;
-import com.hh.dto.Wind;
+import com.hh.dto.*;
 import com.hh.service.ApiService;
 import com.hh.service.WeatherManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
-import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,21 +31,19 @@ public class WeatherManagerTest {
         cache = CityWeatherCache.getINSTANCE();
         cache.clearCache();
         weatherData = WeatherData.builder()
-                .cityName("Moscow")
-                .weatherCondition("conditions")
-                .temperature(2D)
-                .feelsLikeTemp(2D)
+                .name("Moscow")
+                .weather(new Weather())
+                .temperature(new Temperature())
                 .visibility(10)
-                .windSpeed(11)
-                .windDirection("NE")
+                .wind(new Wind())
                 .build();
-        MainParameters temp = MainParameters.builder()
+        Temperature temp = Temperature.builder()
                 .realTemperature(2D)
                 .feelsLikeTemperature(3D).build();
         weatherResponse = WeatherResponse.builder()
                 .cityName("Moscow")
                 .temperature(temp)
-                .weatherCondition("cloudy")
+                .weather(new Weather())
                 .visibility(25)
                 .wind(new Wind(50, 15, 5))
                 .fetchedTime(System.currentTimeMillis() / 1000)
@@ -64,7 +57,7 @@ public class WeatherManagerTest {
         WeatherData result = manager.getWeather("Moscow");
 
         assertNotNull(result);
-        assertEquals("Moscow", result.getCityName());
+        assertEquals("Moscow", result.getName());
         verify(apiService, never()).parseWeather(anyString());
     }
 
@@ -77,7 +70,7 @@ public class WeatherManagerTest {
         WeatherData result = manager.getWeather("Moscow");
 
         assertNotNull(result);
-        assertEquals("Moscow", result.getCityName());
+        assertEquals("Moscow", result.getName());
         verify(apiService).parseWeather("Moscow");
         assertTrue(cache.cachedCities().contains("Moscow"));
     }

@@ -12,18 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MainParameters {
+public class Temperature {
 
     @JsonProperty("temp")
     private Double realTemperature;
     @JsonProperty("feels_like")
     private Double feelsLikeTemperature;
-    @JsonProperty("temp_min")
-    private Double tempMin;
-    @JsonProperty("temp_max")
-    private Double tempMax;
-    @JsonProperty("pressure")
-    private Integer pressure;
-    @JsonProperty("humidity")
-    private Integer humidity;
 }

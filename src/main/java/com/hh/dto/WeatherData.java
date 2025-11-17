@@ -12,22 +12,23 @@ import lombok.NoArgsConstructor;
 @Builder
 public class WeatherData {
 
-    private String cityName;
-    private Double temperature;
-    private Double feelsLikeTemp;
-    private String weatherCondition;
-    private Integer windSpeed;
-    private String windDirection;
+    private Weather weather;
+    private Temperature temperature;
     private Integer visibility;
+    private Wind wind;
+    private Long datetime;
+    private SystemParameters sys;
+    private Integer timezone;
+    private String name;
 
     public WeatherData(WeatherResponse weatherResponse) {
-        this.cityName = weatherResponse.getCityName();
-        this.temperature = weatherResponse.getTemperature().getRealTemperature();
-        this.feelsLikeTemp = weatherResponse.getTemperature().getFeelsLikeTemperature();
-        this.weatherCondition = weatherResponse.getWeatherCondition();
-        this.windSpeed = weatherResponse.getWind().getSpeed();
-        this.windDirection = WindUtils.getWindDirection(weatherResponse.getWind().getDegrees());
+        this.datetime = weatherResponse.getDt();
+        this.name = weatherResponse.getCityName();
+        this.sys = weatherResponse.getSys();
+        this.temperature = weatherResponse.getTemperature();
+        this.timezone = weatherResponse.getTimezone();
         this.visibility = weatherResponse.getVisibility();
+        this.weather = weatherResponse.getWeather();
+        this.wind = weatherResponse.getWind();
     }
-
 }

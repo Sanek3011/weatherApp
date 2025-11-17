@@ -10,11 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+public class SystemParameters {
 
-public class OtherInformation {
-
-    @JsonProperty("country")
-    private String country;
     @JsonProperty("sunrise")
     private Long sunrise;
     @JsonProperty("sunset")

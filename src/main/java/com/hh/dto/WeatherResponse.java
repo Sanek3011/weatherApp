@@ -7,10 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,27 +16,23 @@ public class WeatherResponse {
 
     @JsonProperty("coord")
     private Coordinates coordinates;
-    private String weatherCondition;
+    @JsonProperty("weather")
+    private Weather weather;
     @JsonProperty("main")
-    private MainParameters temperature;
+    private Temperature temperature;
     @JsonProperty("visibility")
     private Integer visibility;
     @JsonProperty("wind")
     private Wind wind;
     @JsonProperty("sys")
-    private OtherInformation otherInformation;
+    private SystemParameters sys;
     @JsonProperty("timezone")
     private Integer timezone;
     @JsonProperty("name")
     private String cityName;
     @JsonProperty("id")
     private Long cityId;
+    @JsonProperty("dt")
+    private Long dt;
     private long fetchedTime;
-
-    @JsonProperty("weather")
-    private void weatherDesc(List<Map<String, String>> weather) {
-        if (weather != null && !weather.isEmpty()) {
-            this.weatherCondition = weather.get(0).get("description");
-        }
-    }
 }
