@@ -14,7 +14,7 @@ public class WeatherClient {
     private final WeatherManager manager;
     private PollingService pollingService;
 
-    public WeatherClient(String apiKey, WorkMode workMode) {
+    protected WeatherClient(String apiKey, WorkMode workMode) {
         this.workMode = workMode;
         this.manager = new WeatherManager(apiKey);
         if (workMode.equals(WorkMode.POLLING)) {
