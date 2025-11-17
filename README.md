@@ -13,8 +13,9 @@ SDK предоставляет:
 - Кэширование последних 10 городов для снижения количества запросов.
 - Два режима работы:
   - **ON_DEMAND** — обновление данных только при запросе.
-  - **POLLING** — автоматическое обновление данных всех кэшированных городов каждые 5 минут.
+  - **POLLING** — автоматическое обновление данных всех кэшированных городов с определенным промежутком (по дефолту раз в 5 минут).
 - Обработку ошибок API через специализированные исключения (`CityNotFoundException`, `InvalidApiKeyException`, `WeatherSdkException`).
+- Создание экземпляров через WeatherFactory. На один ключ один объект
 
 ---
 
@@ -59,7 +60,9 @@ mvn clean install
 Инициализация и пример использования
 ```java
 String apiKey = "ваш ApiKey";
-WeatherClient client = new WeatherClient(apiKey, WorkMode workMode); // Доступны два режима работы WorkMode.ON_DEMAND и WorkMode.Polling
+WeatherClient client = WeatherClientFactory.createClient(String apiKey, WorkMode workmode); // Доступны два режима работы WorkMode.ON_DEMAND и WorkMode.Polling
+void WeatherClientFactory.remove(String apiKey) // Удаление клиента. Так же будет остановлен процесс обновления polling при удалении объекта.
+boolean WeatherClientFactory.contains(String apikey) // Создан ли уже клиент с таким ключом
 WeatherData data = client.getWeather(String cityName); // получаем готовую отформатированную ДТО без лишних полей. Далее можно пользоваться нужными нам полями
 WeatherResponse response = client.getRawData(String cityName); // получаем сырой json объект который присылает нам сервер
 client.stopPolling(); // на случай, если нам нужно остановить обновление данных
