@@ -59,8 +59,14 @@ mvn clean install
 Инициализация и пример использования
 ```java
 String apiKey = "ваш ApiKey";
-WeatherClient client = new WeatherClient(apiKey, WorkMode.ON_DEMAND); // Доступны два режима работы WorkMode.ON_DEMAND и WorkMode.Polling
-WeatherData data = client.getWeather("Moscow"); // получаем готовую отформатированную ДТО без лишних полей. Далее можно пользоваться нужными нам полями
+WeatherClient client = new WeatherClient(apiKey, WorkMode workMode); // Доступны два режима работы WorkMode.ON_DEMAND и WorkMode.Polling
+WeatherData data = client.getWeather(String cityName); // получаем готовую отформатированную ДТО без лишних полей. Далее можно пользоваться нужными нам полями
+WeatherResponse response = client.getRawData(String cityName); // получаем сырой json объект который присылает нам сервер
+client.stopPolling(); // на случай, если нам нужно остановить обновление данных
+client.changeIntervalPolling(long time, TimeUnit unit) // на случай если нам нужно изменить время обновления данных в кеше. По дефолту установлено 5 минут
 ```
+
+
+
 
 
